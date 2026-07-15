@@ -18,7 +18,9 @@ if not isfile("SwagFarmingUtil/Source.lua") then
     writefile("SwagFarmingUtil/Source.lua", game:HttpGet("https://raw.githubusercontent.com/IcantAffordSynapse/Swag-Farm-Util/refs/heads/main/src/source.lua"))
 end
 
-if not game.IsLoaded then game.IsLoaded:Wait() end
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
 
 if getgenv().SwagSettings then
     writefile("SwagFarmingUtil/Config.json", HttpService:JSONEncode(getgenv().SwagSettings))
