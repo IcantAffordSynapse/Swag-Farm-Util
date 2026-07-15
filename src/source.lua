@@ -18,6 +18,12 @@ if not isfile("SwagFarmingUtil/Source.lua") then
     writefile("SwagFarmingUtil/Source.lua", game:HttpGet("https://raw.githubusercontent.com/IcantAffordSynapse/Swag-Farm-Util/refs/heads/main/src/source.lua"))
 end
 
+if getgenv().SwagSettings then
+    writefile("SwagFarmingUtil/Config.json", HttpService:JSONEncode(getgenv().SwagSettings))
+else
+    getgenv().SwagSettings = HttpService:JSONDecode(readfile("SwagFarmingUtil/Config.json"))
+end
+
 if getgenv().SwagSettings.CheckVersion then
     local latest = game:HttpGet("https://raw.githubusercontent.com/IcantAffordSynapse/Swag-Farm-Util/refs/heads/main/src/version.txt")
     local current = readfile("SwagFarmingUtil/Version.txt")
@@ -28,12 +34,6 @@ if getgenv().SwagSettings.CheckVersion then
         loadstring(readfile("SwagFarmingUtil/Source.lua"))()
         return
     end
-end
-
-if getgenv().SwagSettings then
-    writefile("SwagFarmingUtil/Config.json", HttpService:JSONEncode(getgenv().SwagSettings))
-else
-    getgenv().SwagSettings = HttpService:JSONDecode(readfile("SwagFarmingUtil/Config.json"))
 end
 
 if not game.IsLoaded then game.IsLoaded:Wait() end
