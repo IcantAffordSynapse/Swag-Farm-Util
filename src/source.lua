@@ -1,3 +1,28 @@
+getgenv().SwagSettings = {
+    -- Performance
+    FpsCap = 0, -- 0 = No limit
+    ClearTerrain = true,
+    MinimizeQualityLevels = true,
+    MinimizeLighting = true,
+    RemoveOtherPlayers = true,
+    RemoveVFX = true,
+    DisableCoreGui = true,
+    OverrideMaterials = true,
+    Disable3dRendering = false,
+    ---- ^ 3D Rendering
+        OnlyDisableUnfocused = false, -- Disable3dRendering must be enabled in order to work.
+
+    -- Serverhop
+    Serverhop = true,
+    ServerhopDelay = 60, -- Seconds
+    AllowSameServer = false,
+    AutoExecute = true,
+    RejoinOnKick = true,
+
+    -- Extra
+    CheckVersion = true,
+}
+
 local rendering = settings().Rendering
 local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
@@ -18,6 +43,8 @@ if not isfile("SwagFarmingUtil/Source.lua") then
     writefile("SwagFarmingUtil/Source.lua", game:HttpGet("https://raw.githubusercontent.com/IcantAffordSynapse/Swag-Farm-Util/refs/heads/main/src/source.lua"))
 end
 
+if not game.IsLoaded then game.IsLoaded:Wait() end
+
 if getgenv().SwagSettings then
     writefile("SwagFarmingUtil/Config.json", HttpService:JSONEncode(getgenv().SwagSettings))
 else
@@ -35,8 +62,6 @@ if getgenv().SwagSettings.CheckVersion then
         return
     end
 end
-
-if not game.IsLoaded then game.IsLoaded:Wait() end
 
 ---
 -- Unfocused Screen
