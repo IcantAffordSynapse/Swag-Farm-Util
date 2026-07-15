@@ -1,3 +1,28 @@
+getgenv().SwagSettings = {
+    -- Performance
+    FpsCap = 0, -- 0 = No limit
+    ClearTerrain = true,
+    MinimizeQualityLevels = true,
+    MinimizeLighting = true,
+    RemoveOtherPlayers = true,
+    RemoveVFX = true,
+    DisableCoreGui = true,
+    OverrideMaterials = true,
+    Disable3dRendering = false,
+    ---- ^ 3D Rendering
+        OnlyDisableUnfocused = false, -- Disable3dRendering must be enabled in order to work.
+
+    -- Serverhop
+    Serverhop = true,
+    ServerhopDelay = 60, -- Seconds
+    AllowSameServer = false,
+    AutoExecute = true,
+    RejoinOnKick = true,
+
+    -- Extra
+    CheckVersion = true,
+}
+
 local rendering = settings().Rendering
 local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
@@ -198,6 +223,7 @@ for _, v in ipairs(workspace:GetDescendants()) do
     if getgenv().SwagSettings.MinimizeQualityLevels then
         if v:IsA("BasePart") then
             v.Material = Enum.Material.SmoothPlastic
+            continue
         end
     end
 end
@@ -210,12 +236,17 @@ setfpscap(getgenv().SwagSettings.FpsCap)
 if getgenv().SwagSettings.Serverhop then
     task.spawn(function()
         task.wait(getgenv().SwagSettings.ServerhopDelay)
-        local targetJobId = getgenv().SwagSettings.AllowSameServer and nil or getServer()
-        game:GetService("TeleportService"):TeleportToPlaceInstance(
-            game.PlaceId,
-            targetJobId,
-            Players.LocalPlayer
-        )
+        local targetJobId = getgenv().SwagSettings.AllowSameServer and game.JobId or getServer()
+
+        if not targetJobId then
+            game:GetService("TeleportService"):Teleport(game.PlaceId, Players.LocalPlayer)
+        else
+            game:GetService("TeleportService"):TeleportToPlaceInstance(
+                game.PlaceId,
+                targetJobId,
+                Players.LocalPlayer
+            )
+        end
     end)
 end
 
