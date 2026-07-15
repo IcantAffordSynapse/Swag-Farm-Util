@@ -1,28 +1,3 @@
-getgenv().SwagSettings = {
-    -- Performance
-    FpsCap = 0, -- 0 = No limit
-    ClearTerrain = true,
-    MinimizeQualityLevels = true,
-    MinimizeLighting = true,
-    RemoveOtherPlayers = true,
-    RemoveVFX = true,
-    DisableCoreGui = true,
-    OverrideMaterials = true,
-    Disable3dRendering = false,
-    ---- ^ 3D Rendering
-        OnlyDisableUnfocused = false, -- Disable3dRendering must be enabled in order to work.
-
-    -- Serverhop
-    Serverhop = true,
-    ServerhopDelay = 60, -- Seconds
-    AllowSameServer = false,
-    AutoExecute = true,
-    RejoinOnKick = true,
-
-    -- Extra
-    CheckVersion = true,
-}
-
 local rendering = settings().Rendering
 local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
